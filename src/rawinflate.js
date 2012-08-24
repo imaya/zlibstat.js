@@ -582,7 +582,7 @@ ZlibStat.RawInflate.prototype.decodeHuffman = function(litlen, dist) {
   // LZSS buffer
   var lzss = block['lzss'] = [];
   var li = 0;
-  var lzssTotalLength = 0;
+  var lzssCode = block['lzssCode'] = [];
 
   // statistics
   var stats = this.block[this.bi]['litlenCount'] =
@@ -623,7 +623,6 @@ ZlibStat.RawInflate.prototype.decodeHuffman = function(litlen, dist) {
     if (ZlibStat.RawInflate.LengthExtraTable[ti] > 0) {
       codeLength += this.readBits(ZlibStat.RawInflate.LengthExtraTable[ti]);
     }
-    lzssTotalLength += codeLength;
 
     // dist code
     code = this.readCodeByTable(dist);
@@ -633,7 +632,7 @@ ZlibStat.RawInflate.prototype.decodeHuffman = function(litlen, dist) {
     }
 
     // lzss object
-    lzss[li++] = new LZSS(codeLength, codeDist);
+    lzssCode.push(lzss[li++] = new LZSS(codeLength, codeDist));
 
     // lz77 decode
     if (op + codeLength >= olength) {
@@ -650,7 +649,6 @@ ZlibStat.RawInflate.prototype.decodeHuffman = function(litlen, dist) {
     this.ip--;
   }
 
-  block['lzssTotalLength'] = lzssTotalLength;
   this.op = op;
 };
 
