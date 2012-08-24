@@ -81,8 +81,6 @@ ZlibStat.Huffman.buildHuffmanTable = function(lengths) {
   table = new (USE_TYPEDARRAY ? Uint32Array : Array)(size);
   plaintable = [];
 
-  //window.console.log("maxCodeLength:", maxCodeLength);
-
   // ビット長の短い順からハフマン符号を割り当てる
   for (bitLength = 1, code = 0, skip = 2; bitLength <= maxCodeLength;) {
     for (i = 0; i < listSize; ++i) {
@@ -101,10 +99,8 @@ ZlibStat.Huffman.buildHuffmanTable = function(lengths) {
         // そのどちらでも良い場所は同じ値で埋めることで
         // 本来のビット長以上のビット数取得しても問題が起こらないようにする
         for (j = reversed; j < size; j += skip) {
-          //window.console.log("build huffman table:", j.toString(2).split('').reverse().slice(0, bitLength).reverse().join(''), i);
           table[j] = (bitLength << 16) | i;
         }
-        //window.console.log("------------------");
 
         ++code;
       }
@@ -115,8 +111,6 @@ ZlibStat.Huffman.buildHuffmanTable = function(lengths) {
     code <<= 1;
     skip <<= 1;
   }
-
-  window.console.log(plaintable);
 
   return [table, maxCodeLength, minCodeLength, plaintable];
 };

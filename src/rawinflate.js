@@ -108,7 +108,6 @@ ZlibStat.RawInflate.prototype.decompress = function() {
   // shortcut
   var block = this.block;
   var bp = this.bp;
-  var bi = this.bi;
 
   if (!USE_TYPEDARRAY) {
     this.output.subarray = this.output.slice;
@@ -122,9 +121,10 @@ ZlibStat.RawInflate.prototype.decompress = function() {
 
     // save block data
     block[this.bi]['plain'] = this.output.subarray(bp, this.op);
-    block[this.bi]['compressed'] = USE_TYPEDARRAY ? this.input.subarray(ip, this.ip)
-                                          : this.input.slice(ip, this.ip);
+    block[this.bi]['compressed'] = USE_TYPEDARRAY ?
+      this.input.subarray(ip, this.ip) : this.input.slice(ip, this.ip);
 
+    // next block
     ++this.bi;
     bp = this.op;
   }
