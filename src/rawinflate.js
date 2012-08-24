@@ -115,22 +115,21 @@ ZlibStat.RawInflate.prototype.decompress = function() {
   }
 
   while (!this.bfinal) {
-    block[bi] = {};
+    block[this.bi] = {};
     ip = this.ip;
 
     this.parseBlock();
 
     // save block data
-    block[bi]['plain'] = this.output.subarray(bp, this.op);
-    block[bi]['compressed'] = USE_TYPEDARRAY ? this.input.subarray(ip, this.ip)
+    block[this.bi]['plain'] = this.output.subarray(bp, this.op);
+    block[this.bi]['compressed'] = USE_TYPEDARRAY ? this.input.subarray(ip, this.ip)
                                           : this.input.slice(ip, this.ip);
 
-    ++bi;
+    ++this.bi;
     bp = this.op;
   }
 
   this.bp = bp;
-  this.bi = bi;
 
   return this.concatBuffer();
 };
