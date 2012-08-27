@@ -585,12 +585,12 @@ ZlibStat.RawInflate.prototype.decodeHuffman = function(litlen, dist) {
   var lzssCode = block['lzssCode'] = [];
 
   // statistics
-  var stats = this.block[this.bi]['litlenCount'] =
-    new(USE_TYPEDARRAY ? Uint8Array : Array)(286);
+  var stats = block['litlenCount'] =
+    new (USE_TYPEDARRAY ? Uint32Array : Array)(288);
 
   // initialize
   if (!USE_TYPEDARRAY) {
-    for (i = 0; i < 286; ++i) {
+    for (i = 0; i < 288; ++i) {
       stats[i] = 0;
     }
   }
