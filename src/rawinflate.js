@@ -598,11 +598,16 @@ ZlibStat.RawInflate.prototype.decodeHuffman = function(litlen, dist) {
   // litlen code length
   block['litlenCodeLength'] = 0;;
 
-  while (((code = this.readCodeByTablePlain(litlen)) & 0xffff) !== 256) {
+  while (true) {
+    code = this.readCodeByTablePlain(litlen)
     block['litlenCodeLength'] += (code >>> 16);
     code = code & 0xffff;
-
     ++stats[code];
+
+    // end of block
+    if (code === 256) {
+      break;
+    }
 
     // literal
     if (code < 256) {
