@@ -123,14 +123,13 @@ ZlibStat.Inflate.prototype.decompress = function() {
   buffer = this.rawinflate.decompress();
 
   // verify adler-32
-  if (this.verify) {
-    adler32 =
-      input[this.ip++] << 24 | input[this.ip++] << 16 |
-      input[this.ip++] << 8 | input[this.ip++];
+  adler32 = (
+    (input[this.ip++] << 24) | (input[this.ip++] << 16) |
+    (input[this.ip++] <<  8) | (input[this.ip++])
+  ) >>> 0;
 
-    if (adler32 !== Zlib.Adler32(buffer)) {
-      throw new Error('invalid adler-32 checksum');
-    }
+  if (adler32 !== Zlib.Adler32(buffer)) {
+    throw new Error('invalid adler-32 checksum');
   }
 
   return buffer;
