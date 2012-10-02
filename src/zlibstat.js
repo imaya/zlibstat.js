@@ -35,18 +35,4 @@ goog.provide('ZlibStat');
 
 goog.require('ZlibStat.Inflate');
 
-goog.scope(function() {
-
-/**
- * Compression Method
- * @enum {number}
- */
-ZlibStat.CompressionMethod = {
-  DEFLATE: 8,
-  RESERVED: 15
-};
-
-// end of scope
-});
-
 /* vim:set expandtab ts=2 sw=2 tw=80: */

@@ -33,6 +33,7 @@ var ZLIBSTAT_INFLATE_EXPORT = false;
 
 //-----------------------------------------------------------------------------
 
+goog.require('ZlibStat.Enum');
 goog.require('ZlibStat.RawInflate');
 goog.require('Zlib.Adler32');
 
